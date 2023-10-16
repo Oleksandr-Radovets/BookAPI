@@ -48,13 +48,11 @@ public class BookController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("books/{id}")
     public void delete(@PathVariable Long id) {
-
         bookService.delete(id);
     }
 
     @GetMapping("/search")
     public List<BookDto> search(BookSearchParametersDto bookSearchParametersDto) {
-
         return bookService.search(bookSearchParametersDto);
     }
 }
