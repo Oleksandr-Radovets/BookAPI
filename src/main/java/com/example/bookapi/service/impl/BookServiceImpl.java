@@ -9,6 +9,9 @@ import com.example.bookapi.repository.BookRepository;
 import com.example.bookapi.service.BookService;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,7 +19,6 @@ import org.springframework.stereotype.Service;
 public class BookServiceImpl implements BookService {
     private BookRepository bookRepository;
     private BookMapper bookMapper;
-
     @Override
     public BookDto save(CreateBookRequestDto bookRequestDto) {
         return bookMapper.toDto(bookRepository.save(bookMapper.toModel(bookRequestDto)));
@@ -28,6 +30,11 @@ public class BookServiceImpl implements BookService {
                 .stream()
                 .map(bookMapper::toDto)
                 .toList();
+    }
+
+    @Override
+    public BookDto save(CreateBookRequestDto bookRequestDto) {
+        return bookMapper.toDto(bookRepository.save(bookMapper.toModel(bookRequestDto)));
     }
 
     @Override
