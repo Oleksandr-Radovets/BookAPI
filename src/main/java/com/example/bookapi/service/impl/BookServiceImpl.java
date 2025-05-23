@@ -11,6 +11,7 @@ import com.example.bookapi.repository.criteria.BookSpecificationBuilder;
 import com.example.bookapi.service.BookService;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -21,17 +22,18 @@ public class BookServiceImpl implements BookService {
     private BookMapper bookMapper;
     private BookSpecificationBuilder builder;
 
-    @Override
-    public BookDto save(CreateBookRequestDto bookRequestDto) {
-        return bookMapper.toDto(bookMapper.toModel(bookRequestDto));
-    }
-
-    @Override
-    public List<BookDto> findAll() {
-        return bookRepository.findAll()
+    public List<BookDto> findAll(Pageable pageable) {
+        return bookRepository.findAll(pageable)
+                .stream()
+                .toList()
                 .stream()
                 .map(bookMapper::toDto)
                 .toList();
+    }
+
+    @Override
+    public BookDto save(CreateBookRequestDto bookRequestDto) {
+        return bookMapper.toDto(bookRepository.save(bookMapper.toModel(bookRequestDto)));
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.example.bookapi.dto.CreateBookRequestDto;
 import com.example.bookapi.service.BookService;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,9 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookController {
     private final BookService bookService;
 
-    @GetMapping("/books")
-    public List<BookDto> getAll() {
-        return bookService.findAll();
+    @GetMapping("books")
+    public List<BookDto> findAll(Pageable pageable) {
+        return bookService.findAll(pageable);
     }
 
     @GetMapping("books/{id}")
