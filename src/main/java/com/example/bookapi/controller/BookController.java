@@ -1,9 +1,9 @@
 package com.example.bookapi.controller;
 
 import com.example.bookapi.dto.BookDto;
-import com.example.bookapi.dto.BookSearchParametersDto;
 import com.example.bookapi.dto.CreateBookRequestDto;
 import com.example.bookapi.service.BookService;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -35,8 +35,9 @@ public class BookController {
     }
 
     @PostMapping("/book")
-    public BookDto createBook(@RequestBody CreateBookRequestDto bookDto) {
+    public BookDto createBook(@RequestBody @Valid CreateBookRequestDto bookDto) {
         return bookService.save(bookDto);
+
     }
 
     @PutMapping("book/{id}")
@@ -50,10 +51,5 @@ public class BookController {
     @DeleteMapping("books/{id}")
     public void delete(@PathVariable Long id) {
         bookService.delete(id);
-    }
-
-    @GetMapping("/search")
-    public List<BookDto> search(BookSearchParametersDto bookSearchParametersDto) {
-        return bookService.search(bookSearchParametersDto);
     }
 }
